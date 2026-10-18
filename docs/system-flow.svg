@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-label="System flow. Registration: enter details, capture faces with webcam and Haar cascade, crop and resize, store reference images and user info. Attendance: capture a face, compare it with 10 reference images using the Siamese network, a pair matches if the score is above 0.6, and attendance is logged if at least 7 of 10 pairs match, otherwise it is rejected.">
+<title>Face recognition attendance system flow</title>
+<style>
+  :root { --card:#f8fafc; --line:#cbd5e1; --text:#0f172a; --muted:#475569; --sky:#0284c7; --violet:#7c3aed; --green:#059669; --red:#dc2626; --lane:#f1f5f9; --okbg:#d1fae5; --nobg:#fee2e2; --hl:#ede9fe; }
+  @media (prefers-color-scheme: dark) {
+    :root { --card:#0f172a; --line:#334155; --text:#e2e8f0; --muted:#94a3b8; --sky:#38bdf8; --violet:#a78bfa; --green:#34d399; --red:#f87171; --lane:#0b1222; --okbg:#06301f; --nobg:#3a1010; --hl:#241a45; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; fill: var(--text); text-anchor: middle; }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .lane { fill: var(--lane); stroke: var(--line); stroke-width: 1; }
+  .lanelabel { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; fill: var(--sky); text-anchor: start; }
+  .card { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+  .hl { fill: var(--hl); stroke: var(--violet); stroke-width: 1.5; }
+  .title { font-size: 13.5px; font-weight: 600; }
+  .sub { font-size: 11.5px; fill: var(--muted); }
+  .arrow { fill: none; stroke: var(--muted); stroke-width: 1.6; marker-end: url(#h); }
+  .dash { fill: none; stroke: var(--violet); stroke-width: 1.6; stroke-dasharray: 4 3; marker-end: url(#hv); }
+</style>
+<defs>
+  <marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#64748b"/></marker>
+  <marker id="hv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8b5cf6"/></marker>
+</defs>
+
+<!-- ===== Lane 1: Registration (row centre y = 100) ===== -->
+<rect class="lane" x="10" y="10" width="940" height="170" rx="14"/>
+<text x="30" y="36" class="lanelabel">1 · REGISTRATION</text>
+
+<rect class="card" x="30" y="55" width="150" height="90" rx="10"/>
+<text x="105" y="86" class="title">Enter details</text>
+<text x="105" y="106" class="sub">name · ID · course</text>
+<text x="105" y="122" class="sub mono">CLI</text>
+<path class="arrow" d="M180 100 H215"/>
+
+<rect class="card" x="217.5" y="55" width="150" height="90" rx="10"/>
+<text x="292.5" y="86" class="title">Capture faces</text>
+<text x="292.5" y="106" class="sub">webcam +</text>
+<text x="292.5" y="122" class="sub">Haar cascade</text>
+<path class="arrow" d="M367.5 100 H402.5"/>
+
+<rect class="card" x="405" y="55" width="150" height="90" rx="10"/>
+<text x="480" y="86" class="title">Crop &amp; resize</text>
+<text x="480" y="106" class="sub">face only</text>
+<text x="480" y="122" class="sub mono">400×400</text>
+<path class="arrow" d="M555 100 H590"/>
+
+<path class="card" d="M592.5 64 a95 10 0 0 1 190 0 v62 a95 10 0 0 1 -190 0 z"/>
+<path d="M592.5 64 a95 10 0 0 0 190 0" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+<text x="687.5" y="100" class="title">Reference images</text>
+<text x="687.5" y="118" class="sub mono">+ user_info.csv</text>
+
+<!-- ===== Lane 2: Attendance (row centre y = 310) ===== -->
+<rect class="lane" x="10" y="196" width="940" height="214" rx="14"/>
+<text x="30" y="222" class="lanelabel">2 · ATTENDANCE</text>
+
+<!-- store feeds the Siamese network -->
+<path class="dash" d="M687.5 138 V232 Q687.5 240 679.5 240 H411 Q403 240 403 248 V263"/>
+
+<rect class="card" x="30" y="265" width="120" height="90" rx="10"/>
+<text x="90" y="296" class="title">Enter name</text>
+<text x="90" y="316" class="sub">who is</text>
+<text x="90" y="332" class="sub">checking in</text>
+<path class="arrow" d="M150 310 H172"/>
+
+<rect class="card" x="174" y="265" width="120" height="90" rx="10"/>
+<text x="234" y="296" class="title">Capture face</text>
+<text x="234" y="316" class="sub">webcam +</text>
+<text x="234" y="332" class="sub">Haar cascade</text>
+<path class="arrow" d="M294 310 H316"/>
+
+<rect class="hl" x="318" y="265" width="170" height="90" rx="10"/>
+<text x="403" y="291" class="title">Siamese network</text>
+<text x="403" y="309" class="sub">compare with</text>
+<text x="403" y="325" class="sub">10 reference images</text>
+<text x="403" y="341" class="sub mono">→ 10 scores</text>
+<path class="arrow" d="M488 310 H510"/>
+
+<rect class="card" x="512" y="265" width="150" height="90" rx="10"/>
+<text x="587" y="296" class="title">Pair match?</text>
+<text x="587" y="316" class="sub">each score</text>
+<text x="587" y="332" class="sub mono">&gt; 0.6</text>
+<path class="arrow" d="M662 310 H684"/>
+
+<rect class="card" x="686" y="265" width="100" height="90" rx="10"/>
+<text x="736" y="296" class="title">Vote</text>
+<text x="736" y="316" class="sub">≥ 7 of 10</text>
+<text x="736" y="332" class="sub">match?</text>
+
+<!-- outcomes, symmetric around y = 310 -->
+<path class="arrow" d="M786 300 H794 Q799 300 799 295 V279 Q799 274 804 274 H808"/>
+<path class="arrow" d="M786 320 H794 Q799 320 799 325 V341 Q799 346 804 346 H808"/>
+
+<rect x="810" y="248" width="120" height="52" rx="10" fill="var(--okbg)" stroke="var(--green)" stroke-width="1.5"/>
+<text x="870" y="270" class="title" style="fill:var(--green)">Logged</text>
+<text x="870" y="288" class="sub">daily CSV log</text>
+
+<rect x="810" y="320" width="120" height="52" rx="10" fill="var(--nobg)" stroke="var(--red)" stroke-width="1.5"/>
+<text x="870" y="342" class="title" style="fill:var(--red)">Rejected</text>
+<text x="870" y="360" class="sub">not logged</text>
+</svg>

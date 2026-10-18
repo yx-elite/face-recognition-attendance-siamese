@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" width="960" height="420" role="img" aria-label="Siamese network architecture: two face images pass through the same embedding CNN with shared weights, an L1 distance layer compares the embeddings, and a sigmoid output gives a similarity score">
+<title>Siamese network architecture</title>
+<style>
+  :root { --card:#f8fafc; --line:#cbd5e1; --text:#0f172a; --muted:#475569; --sky:#0284c7; --violet:#7c3aed; --green:#059669; --chip:#e0f2fe; --chip2:#ede9fe; }
+  @media (prefers-color-scheme: dark) {
+    :root { --card:#0f172a; --line:#334155; --text:#e2e8f0; --muted:#94a3b8; --sky:#38bdf8; --violet:#a78bfa; --green:#34d399; --chip:#0c2a3f; --chip2:#241a45; }
+  }
+  text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; fill: var(--text); }
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .card { fill: var(--card); stroke: var(--line); stroke-width: 1.5; }
+  .title { font-size: 15px; font-weight: 600; }
+  .sub { font-size: 12px; fill: var(--muted); }
+  .layer { font-size: 12px; }
+  .arrow { fill: none; stroke: var(--muted); stroke-width: 1.6; marker-end: url(#head); }
+  .shared { fill: none; stroke: var(--violet); stroke-width: 1.6; stroke-dasharray: 5 4; }
+  .tag { font-size: 12px; font-weight: 600; fill: var(--violet); }
+  .accent { fill: var(--sky); }
+  .ok { fill: var(--green); }
+</style>
+<defs>
+  <marker id="head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#64748b"/></marker>
+</defs>
+
+<!-- Inputs -->
+<g>
+  <rect class="card" x="20" y="62" width="170" height="96" rx="12"/>
+  <circle cx="56" cy="110" r="18" fill="var(--chip)" stroke="var(--sky)" stroke-width="1.5"/>
+  <circle cx="56" cy="104" r="6" class="accent"/><path d="M45 121 q11 -12 22 0" fill="var(--sky)"/>
+  <text x="84" y="104" class="title">Reference</text>
+  <text x="84" y="122" class="sub">registered face</text>
+  <text x="84" y="140" class="sub mono">224×224×3</text>
+
+  <rect class="card" x="20" y="262" width="170" height="96" rx="12"/>
+  <circle cx="56" cy="310" r="18" fill="var(--chip)" stroke="var(--sky)" stroke-width="1.5"/>
+  <circle cx="56" cy="304" r="6" class="accent"/><path d="M45 321 q11 -12 22 0" fill="var(--sky)"/>
+  <text x="84" y="304" class="title">Live capture</text>
+  <text x="84" y="322" class="sub">webcam frame</text>
+  <text x="84" y="340" class="sub mono">224×224×3</text>
+</g>
+
+<path class="arrow" d="M190 110 H238"/>
+<path class="arrow" d="M190 310 H238"/>
+
+<!-- Twin embedding CNNs -->
+<g>
+  <rect class="card" x="242" y="26" width="330" height="168" rx="12"/>
+  <text x="262" y="52" class="title">Embedding CNN</text>
+  <text x="552" y="52" class="sub" text-anchor="end">branch 1</text>
+  <g class="mono layer">
+    <rect x="262" y="64" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="79">Conv 64 · 10×10 → MaxPool</text>
+    <rect x="262" y="90" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="105">Conv 128 · 7×7 → MaxPool</text>
+    <rect x="262" y="116" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="131">Conv 128 · 4×4 → MaxPool</text>
+    <rect x="262" y="142" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="157">Conv 256 · 4×4 → Flatten</text>
+    <rect x="262" y="168" width="290" height="18" rx="6" fill="var(--chip2)"/><text x="272" y="181">Dense 4096 · sigmoid</text>
+  </g>
+
+  <rect class="card" x="242" y="226" width="330" height="168" rx="12"/>
+  <text x="262" y="252" class="title">Embedding CNN</text>
+  <text x="552" y="252" class="sub" text-anchor="end">branch 2</text>
+  <g class="mono layer">
+    <rect x="262" y="264" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="279">Conv 64 · 10×10 → MaxPool</text>
+    <rect x="262" y="290" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="305">Conv 128 · 7×7 → MaxPool</text>
+    <rect x="262" y="316" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="331">Conv 128 · 4×4 → MaxPool</text>
+    <rect x="262" y="342" width="290" height="22" rx="6" fill="var(--chip)"/><text x="272" y="357">Conv 256 · 4×4 → Flatten</text>
+    <rect x="262" y="368" width="290" height="18" rx="6" fill="var(--chip2)"/><text x="272" y="381">Dense 4096 · sigmoid</text>
+  </g>
+
+  <path class="shared" d="M220 196 V224"/>
+  <path class="shared" d="M220 196 H236 M220 224 H236"/>
+  <text x="212" y="214" class="tag" text-anchor="end">shared weights</text>
+</g>
+
+<!-- Embeddings to L1 -->
+<path class="arrow" d="M572 110 C 620 110, 620 178, 652 178"/>
+<path class="arrow" d="M572 310 C 620 310, 620 242, 652 242"/>
+<text x="596" y="100" class="sub mono">e₁</text>
+<text x="596" y="330" class="sub mono">e₂</text>
+
+<!-- Distance, dense, output -->
+<g>
+  <rect class="card" x="656" y="160" width="134" height="100" rx="12"/>
+  <text x="723" y="196" class="title" text-anchor="middle">L1 distance</text>
+  <text x="723" y="220" class="mono layer" text-anchor="middle">|e₁ − e₂|</text>
+  <text x="723" y="241" class="sub" text-anchor="middle">custom layer</text>
+
+  <path class="arrow" d="M790 210 H812"/>
+
+  <rect class="card" x="816" y="120" width="124" height="180" rx="12"/>
+  <text x="878" y="150" class="title" text-anchor="middle">Dense 1</text>
+  <text x="878" y="168" class="sub" text-anchor="middle">sigmoid</text>
+  <line x1="836" y1="184" x2="920" y2="184" stroke="var(--line)"/>
+  <text x="878" y="210" class="sub" text-anchor="middle">similarity</text>
+  <text x="878" y="242" class="ok" font-size="26" font-weight="700" text-anchor="middle">0 – 1</text>
+  <text x="878" y="268" class="sub" text-anchor="middle">&gt; 0.6 → match</text>
+  <text x="878" y="286" class="sub" text-anchor="middle">trained with BCE</text>
+</g>
+</svg>
